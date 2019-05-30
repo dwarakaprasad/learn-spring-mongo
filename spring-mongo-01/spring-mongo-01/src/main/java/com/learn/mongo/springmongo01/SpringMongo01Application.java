@@ -1,27 +1,27 @@
 package com.learn.mongo.springmongo01;
 
-import com.learn.mongo.springmongo01.domain.Person;
-import com.learn.mongo.springmongo01.repository.PersonRepository;
+import com.learn.mongo.springmongo01.service.PersonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @SpringBootApplication
 public class SpringMongo01Application implements CommandLineRunner {
-    
+
     @Autowired
-	private PersonRepository repository;
+    private PersonService personService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringMongo01Application.class, args);
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public void run(String... args) throws Exception {
-        Person p1 = new Person("Father", "LastName");
-        repository.insert(p1);
+        personService.processPerson();
 	}
 }
